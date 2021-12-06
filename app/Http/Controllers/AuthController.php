@@ -59,4 +59,10 @@ class AuthController extends Controller
         else
             return redirect()->route('login-dosen');
     }
+
+
+    public function changepassword()
+    {
+        return view('auth.change-password', ['title' => 'Change Password User']);
+    }
 }
