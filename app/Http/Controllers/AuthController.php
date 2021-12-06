@@ -39,7 +39,8 @@ class AuthController extends Controller
         $user = User::where($fieldType, $request->username);
         if ($user->count() > 0) {
             if (Auth::attempt([$fieldType => $request->username, 'password' => $request->password])) {
-                return redirect()->route('dashboard-mahasiswa');            } else {
+                return redirect()->route('dashboard-mahasiswa');
+            } else {
                 $request->session()->flash('error', 'Username or password wrong, try again!');
                 return redirect()->route('login-mahasiswa');
             }
@@ -51,8 +52,11 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $id = auth()->user()->role;
         Auth::logout();
-        return redirect()->route('login-mahasiswa');
+        if ($id === 3)
+            return redirect()->route('login-mahasiswa');
+        else
+            return redirect()->route('login-dosen');
     }
-
 }

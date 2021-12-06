@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\GuidanceController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,7 @@ Route::get('/', function () {
     return view('awal', [
         "title" => "Web Bimbingan Skripsi"
     ]);
-});
+})->name('/');
 
 Route::get('/loginMahasiswa', function () {
     return view('mahasiswa/loginMahasiswa', ['title' => 'Login Mahasiswa']);
@@ -38,6 +39,13 @@ Route::group(['prefix' => 'mahasiswa', 'middleware' => 'auth'], function () {
         return view('mahasiswa/dashboardMahasiswa', ['title' => 'Dashboard Mahasiswa']);
     })->name('dashboard-mahasiswa');
     Route::get('/profile', [MahasiswaController::class, 'index'])->name('profile-mahasiswa');
+});
+
+Route::group(['prefix' => 'dosen', 'middleware' => 'auth'], function () {
+    Route::get('/dashboard', [DosenController::class, 'index'])->name('dashboard-dosen');
+    Route::get('/list/bimbingan', [DosenController::class, 'list'])->name('list-bimbingan');
+    Route::get('/mahasiswa/bimbingan', [DosenController::class, 'mahasiswa'])->name('mahasiswa-bimbingan');
+    Route::get('/proses/bimbingan', [DosenController::class, 'proses'])->name('proses-bimbingan');
 });
 
 
@@ -58,11 +66,14 @@ Route::get('/loginAdmin', function () {
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, "store"])->name('register');
     Route::post('login', [AuthController::class, "login"])->name('login');
+    Route::post('password', [AuthController::class, "login"])->name('password');
 });
+
+Route::get('/change/password', [AuthController::class, "changepassword"])->name('change-password');
 
 Route::get('/loginDosen', function () {
     return view('dosen/loginDosen', ['title' => 'Login Mahasiswa']);
-});
+})->name('login-dosen');
 
 Route::get('/logout', [AuthController::class, "logout"])->name('logout');
 
