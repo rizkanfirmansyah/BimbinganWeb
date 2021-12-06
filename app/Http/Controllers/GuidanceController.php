@@ -12,8 +12,13 @@ class GuidanceController extends Controller
         return view('mahasiswa.submission', ['title' => 'Pengajuan Bimbingan']);
     }
 
+    public function list()
+    {
+        return view('mahasiswa.list', ['title' => 'Hasil Bimbingan']);
+    }
+
     public function result()
     {
-        return view('mahasiswa.result', ['title' => 'Hasil Bimbingan']);
+        return view('mahasiswa.result', ['title' => 'Detail Hasil Bimbingan']);
     }
 }

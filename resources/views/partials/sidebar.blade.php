@@ -4,10 +4,10 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon">
+                    <i class="fab fa-bimobject"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">App Bimbing <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -36,8 +36,8 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item {{request()->routeIs('hasil-bimbingan') ? 'active' : ' '}}">
-                <a class="nav-link" href="{{route('hasil-bimbingan')}}">
+            <li class="nav-item {{request()->routeIs('data-bimbingan') ? 'active' : ' '}}">
+                <a class="nav-link" href="{{route('data-bimbingan')}}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Hasil Bimbingan</span></a>
             </li>
