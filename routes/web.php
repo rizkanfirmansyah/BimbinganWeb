@@ -5,6 +5,7 @@ use App\Http\Controllers\GuidanceController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MahasiswaController;
 use Laravel\Jetstream\Rules\Role;
 
 /*
@@ -32,17 +33,21 @@ Route::get('/registerMahasiswa', function () {
     return view('mahasiswa/registerMahasiswa', ['title' => 'Register Mahasiswa']);
 });
 
-Route::get('/dashboardMahasiswa', function () {
-    return view('mahasiswa/dashboardMahasiswa', ['title' => 'Dashboard Mahasiswa']);
-})->name('dashboard-mahasiswa');
+Route::group(['prefix' => 'mahasiswa', 'middleware' => 'auth'], function () {
+    Route::get('/dashboard', function () {
+        return view('mahasiswa/dashboardMahasiswa', ['title' => 'Dashboard Mahasiswa']);
+    })->name('dashboard-mahasiswa');
+    Route::get('/profile', [MahasiswaController::class, 'index'])->name('profile-mahasiswa');
+});
 
 
 Route::group(['prefix' => 'bimbingan', 'middleware' => 'auth'], function () {
     Route::get('/pengajuan', [GuidanceController::class, 'submission'])->name('pengajuan-bimbingan');
+    Route::get('/data', [GuidanceController::class, 'list'])->name('data-bimbingan');
     Route::get('/hasil', [GuidanceController::class, 'result'])->name('hasil-bimbingan');
 });
 
-Route::get('/redirects',  [HomeController::class,"index"]);
+Route::get('/redirects',  [HomeController::class, "index"]);
 
 
 Route::get('/loginAdmin', function () {
