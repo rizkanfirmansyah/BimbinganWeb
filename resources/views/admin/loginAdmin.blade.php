@@ -31,8 +31,71 @@
         </div>
     </nav>
 
-    <div class="container">
-        <h1>Halaman Login Admin</h1>
+
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="container mb-4">
+            <h1>
+                <center>Login Admin</center>
+
+            </h1>
+        </div>
+
+        <div class="container mt-4">
+            <div class="card border bg-light" style="width: 40rem;">
+                @if (session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+                @endif
+                @if (session()->has('error'))
+
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+                @endif
+                <div class="card-body">
+                    <form action="{{ route('login') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username :</label>
+                            <input type="username" class="form-control @error('username') is-invalid @enderror"
+                                id="username" placeholder="Input Username" name="username">
+                            @error('username')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control  @error('password') is-invalid @enderror"
+                                id="password" placeholder="Enter password" name="password">
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        {{-- <a class="btn btn-primary" href="/dashboardMahasiswa" role="button">Login</a> --}}
+                        <button type="submit" class="btn btn-primary">Login</button>
+
+                        {{-- <a href="/registerMahasiswa" class="btn btn-link">Belum Punya Akun?</a> --}}
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

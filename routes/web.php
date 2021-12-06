@@ -60,16 +60,16 @@ Route::get('/redirects',  [HomeController::class, "index"]);
 
 Route::get('/loginAdmin', function () {
     return view('admin/loginAdmin', ['title' => 'Login Admin']);
-});
+})->name('login-admin');
 
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, "store"])->name('register');
     Route::post('login', [AuthController::class, "login"])->name('login');
-    Route::post('password', [AuthController::class, "login"])->name('password');
+    Route::post('password', [AuthController::class, "password"])->name('password');
 });
 
-Route::get('/change/password', [AuthController::class, "changepassword"])->name('change-password');
+Route::get('/change/password', [AuthController::class, "changepassword"])->middleware('auth')->name('change-password');
 
 Route::get('/loginDosen', function () {
     return view('dosen/loginDosen', ['title' => 'Login Mahasiswa']);

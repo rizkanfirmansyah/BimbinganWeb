@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 
 class AuthController extends Controller
 {
@@ -54,12 +55,27 @@ class AuthController extends Controller
     {
         $id = auth()->user()->role;
         Auth::logout();
-        if ($id === 3)
+        if ($id == 3)
             return redirect()->route('login-mahasiswa');
-        else
+        else if ($id == 2)
             return redirect()->route('login-dosen');
+        else
+            return redirect()->route('login-admin');
     }
 
+    public function password(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $request->validate([
+            'password_old' => 'required',
+            'password_new' => 'required|min:5|max:255|different:password_old',
+            'repeat_password' => 'required|same:password_new',
+        ]);
+
+        // $user->update(['password' => bcrypt($request->password_new)]);
+        $request->session()->flash('success', 'Password changed');
+        return redirect('/change/password');
+    }
 
     public function changepassword()
     {
